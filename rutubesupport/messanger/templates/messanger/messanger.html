@@ -1,0 +1,400 @@
+{% load static %}
+
+{% block styles %}
+
+
+<style>
+    body, html {
+    height: 100vh;
+    background: linear-gradient(to bottom, #000 15%, #c23033 70%, #800e10 100%);
+    overflow: hidden; /* Отключите прокрутку для всего экрана */
+    background: #14191F;
+}
+
+.chat-container {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px; /* Установите максимальную ширину для контейнера */
+    margin: 10px auto;
+    border: 0px solid #ccc;
+    border-radius: 10px;
+    overflow-y: auto; /* Добавьте прокрутку только для этого элемента */
+    font-family: Arial;
+    font-family: Open Sans, sans-serif;
+}
+
+/* Настройка красивого скроллбара */
+.chat-container::-webkit-scrollbar {
+    width: 12px; /* Ширина скроллбара */
+    height: 12px; /* Высота скроллбара */
+}
+
+.chat-container::-webkit-scrollbar-track {
+<!--    background: #f0f0f0; /* Цвет трека */-->
+    border-radius: 10px; /* Закругленные углы трека */
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background-color: #ebeded; /* Цвет ползунка */
+    border-radius: 20px; /* Закругленные углы ползунка */
+    border: 3px solid #f0f0f0; /* Пространство между ползунком и краем */
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Цвет ползунка при наведении */
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.message.sent {
+    background-color: #000; /* Цвет для отправленных сообщений */
+    align-self: flex-end;
+    text-align: left;
+    margin-left: 350px; /* Смещает блок сообщения влево */
+    margin-right: 55px;
+    font-family: Arial; /* Устанавливает шрифт Arial */
+
+    border: 5px solid #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    font-family: Arial;
+    color: #fff;
+}
+
+.messages-list {
+    list-style: none; /* Убираем точки */
+    padding: 0; /* Убираем отступы */
+    margin: 0; /* Убираем отступы */
+}
+.message.received {
+    background-color: #000; /* Цвет для полученных сообщений */
+    align-self: flex-start;
+    text-align: left;
+    margin-right: 350px; /* Смещает блок сообщения вправо */
+    margin-left: 55px;
+    border: 5px solid #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    font-family: Arial;
+    color: #fff;
+}
+
+.message-form {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #000;
+    border-radius: 20px;
+    border-color: None;
+    max-width: 900px;
+    margin: auto;
+    gap: 10px;
+    margin-bottom: 20px; /* Добавляем отступ снизу */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+}
+
+.message-input {
+    flex: 1;
+    border: none; /* Убираем границу */
+    background-color: #000;
+    height: 50px; /* Уменьшите высоту поля ввода */
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none; /* Запретите изменение размера */
+    outline: none; /* Убираем границу при фокусе */
+    font-size: 14px;
+    font-family: Arial;
+    color: #c23033;
+}
+
+.btn-send, .generate-btn, .clear-btn  {
+    border-radius: 100px;
+    background-color: #db3327; /* Цвет кнопок */
+    color: 000;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-family: Arial;
+    height: 40px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    text-align: center;
+    position: relative; /* Добавляем для абсолютного позиционирования подсказки */
+}
+
+.generate-btn svg {
+    position: relative;
+    top: -3px; /* Поднимаем иконку на 3px */
+}
+
+.btn-send::after, .generate-btn::after, .clear-btn::after {
+    content: attr(title); /* Используем содержимое атрибута title */
+    position: absolute;
+    top: -30px; /* Размещаем подсказку на уровне верхней границы кнопки */
+    left: 45%; /* Смещаем подсказку вправо за пределы кнопки */
+    background-color: #fff; /* Белый фон */
+    color: #db3327; /* Черный текст */
+    padding: 5px 10px;
+    border-radius: 8px; /* Закругленные углы */
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    font-size: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Тень для подсказки */
+    background-color: #00a1e7;
+    z-index: 10;
+}
+
+.btn-primary_ {
+    border-radius: 100px;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: fit-content; /* Ширина кнопки соответствует её содержимому */
+    color: #000;
+    background-color: #db3327;
+    font-family: Arial; /* Устанавливает шрифт Arial */
+    display: flex;
+    flex-direction: column; /* Кнопки друг под другом */
+    align-items: flex-end; /* Выровнять кнопки по правому краю */
+    font-family: Arial; /* Устанавливает шрифт Arial */
+    margin-left: 90%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    text-align: center;
+    background-color: #00a1e7;
+}
+
+a {
+    text-decoration: none;
+}
+
+@keyframes zoom-in-out {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.095);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Применение анимации к изображению */
+.zoom-image {
+    animation: zoom-in-out 3s ease-in-out infinite; /* Анимация будет повторяться бесконечно */
+    transition: box-shadow 0.3s ease; /* Плавный переход для тени, если нужно */
+    width:8%;
+    mix-blend-mode: multiply;
+}
+
+.zoom-image:hover {
+<!--    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Тень при наведении */-->
+}
+
+@media (max-width: 1024px) {
+        .chat-container {
+            height: calc(100vh - 38vh);
+            width: 95vw; /* Увеличиваем ширину контейнера */
+        }
+
+        .message-form {
+            bottom: 1vh;
+            padding: 1rem;
+            gap: 1rem;
+            font-size: 1.25em;
+        }
+
+        .message-input {
+            height: 8rem;
+            padding: 20px;
+            font-size: 2rem;
+        }
+
+        .btn-send, .generate-btn, .clear-btn {
+            padding: 1rem;
+            font-size: 12rem; /* Увеличиваем размер шрифта кнопок */
+            height: 8rem;
+            weight: 8rem;
+            text-align: center;
+        }
+
+        .btn-primary_ {
+          font-size: 4rem;
+          height: 4rem;
+          width: 8rem;
+          margin-left: 80%;
+          font-size: 20px;
+          text-align: center;
+        }
+
+        .zoom-image {
+            width: 35%; /* Увеличиваем размер изображения */
+            height: 15%; /* Увеличиваем размер изображения */
+        }
+        .message.sent {
+            margin-right: 55px; /* Смещает блок сообщения вправо */
+            margin-left: 125px;
+        }
+        .message.received {
+            margin-right: 90px; /* Смещает блок сообщения вправо */
+            margin-left: 55px;
+        }
+
+    }
+
+@media (max-width: 768px) {
+        body, html {
+            font-size: 14px; /* Уменьшаем размер шрифта для планшетов и смартфонов */
+        }
+
+        .chat-container {
+            height: calc(100vh - 20vh);
+            width: 100vw; /* Полная ширина экрана */
+            margin: 2vh auto;
+        }
+
+        .message-form {
+            bottom: 2vh;
+            padding: 1rem;
+            gap: 0.5rem;
+        }
+
+        .message-input {
+            height: 3.5rem;
+        }
+
+        .btn-send, .generate-btn, .clear-btn {
+            padding: 1rem;
+            font-size: 1.1em; /* Увеличиваем размер шрифта кнопок */
+        }
+
+        .zoom-image {
+            width: 60%; /* Увеличиваем размер изображения */
+        }
+    }
+
+@media (max-width: 480px) {
+        body, html {
+            font-size: 12px; /* Ещё меньше размер шрифта для маленьких экранов */
+        }
+
+        .chat-container {
+            height: calc(100vh - 25vh);
+            width: 100vw; /* Полная ширина экрана */
+            margin: 1vh auto;
+        }
+
+        .message-form {
+            flex-direction: column;
+            bottom: 1vh;
+            padding: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .message-input {
+            height: 3rem;
+        }
+
+        .btn-send, .generate-btn, .clear-btn {
+            padding: 0.8rem;
+            font-size: 1.2em; /* Увеличиваем размер шрифта кнопок */
+        }
+
+        .zoom-image {
+            width: 80px; /* Увеличиваем размер изображения */
+        }
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+  <div class="chat-container">
+    <div class="card flex-grow-1">
+      <div class="card-body messages-box">
+        <ul class="list-unstyled messages-list">
+          {% for chat in chats %}
+              <li class="message sent">
+                <div class="message-sender"><b>Пользователь</b></div>
+                <div class="message-text">
+                  <div class="message-content">Описание проблемы: {{ chat.problem_description|safe }}
+                                           <br>Дополнительная информация: {{ chat.detailed_description|safe }}
+                                           <br>Утверждения, подходящие проблеме: {{ chat.multiple_choice|safe }}
+                  </div>
+                </div>
+              </li>
+              <li class="message received">
+                <div class="message-text">
+                  <div class="message-sender"><b>GigaChat</b></div>
+                  <div class="message-content">{{ chat.response_giga|safe }}</div>
+                </div>
+              </li>
+                {% if chat.response_emp %}
+                <li class="message received">
+                <div class="message-text">
+                  <div class="message-sender"><b>Сотрудник</b></div>
+                  <div class="message-content">{{ chat.response_emp|safe }}</div>
+                </div>
+                </li>
+                {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <form class="message-form">
+      {% csrf_token %}
+      <textarea class="form-control message-input" placeholder="Напишите сообщение"></textarea>
+      <button type="submit" class="btn btn-primary btn-send" title="Отправить"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+  <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+</svg></button>
+    </form>
+
+  </div>
+
+
+ <script>
+    const messagesList = document.querySelector('.messages-list');
+    const messageForm = document.querySelector('.message-form');
+    const messageInput = document.querySelector('.message-input');
+
+    messageForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const message = messageInput.value.trim();
+        if (message.length === 0) return;
+
+        // Отправка данных на сервер через fetch
+        fetch('', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'response_emp': message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Создаем новый элемент с ответом пользователя
+            const messageItem = document.createElement('li');
+            messageItem.classList.add('message', 'sent');
+            messageItem.innerHTML = `
+                <div class="message-text">
+                    <div class="message-content">${data.response_emp}</div>
+                </div>`;
+
+            // Добавляем сообщение в список сообщений
+            messagesList.appendChild(messageItem);
+            messageInput.value = '';  // Очищаем поле ввода
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+{% endblock %}
+

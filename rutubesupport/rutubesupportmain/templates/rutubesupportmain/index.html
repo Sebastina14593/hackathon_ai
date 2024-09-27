@@ -1,0 +1,103 @@
+<!--Указываем наследование от нужного файла-->
+{% extends 'rutubesupportmain/layout.html' %}
+{% load form_tags %}
+{% load static %}
+<header class="header">
+    <div class="logo">ruДУСя</div>
+    <div class="buttons-right">
+        {% if user.is_authenticated %}
+            <a href="logout" class="btn btn-primary">Выйти</a>
+        {% else %}
+            <a href="login" class="btn btn-primary">Войти</a>
+            <a href="register" class="btn btn-primary">Зарегистрироваться</a>
+        {% endif %}
+    </div>
+</header>
+{% block content %}
+    <div class="features">
+        <aside>
+        <ul>
+            <a style="text-decoration: none" href =""><li>Главная</li></a>
+            <a style="text-decoration: none" href =""><li>RUTUBE для блогеров</li></a>
+            <a style="text-decoration: none" href =""><li>Каталог</li></a>
+            <a style="text-decoration: none" href =""><li>Популярное</li></a>
+            <a style="text-decoration: none" href =""><li>В топе</li></a>
+            <a style="text-decoration: none" href =""><li>Shorts</li></a>
+            <a style="text-decoration: none" href =""><li>ТВ онлайн</li></a>
+            <a style="text-decoration: none" href =""><li>Трансляции</li></a>
+            <a style="text-decoration: none" href =""><li>Подписки</li></a>
+            <a style="text-decoration: none" href =""><li>Моё</li></a>
+            <a style="text-decoration: none" href =""><li>Фильмы</li></a>
+            <a style="text-decoration: none" href =""><li>Просто посмотреть</li></a>
+        </ul>
+        </aside>
+        <div class="buttons-right">
+        <div>{% if user.is_authenticated %}
+                <a href="logout" class="btn btn-primary">Выйти</a>
+               {% else %}
+               <a href="login" class="btn btn-primary">Войти</a>
+               <a href="register" class="btn btn-primary">Зарегистрироваться</a>
+               {% endif %}</div>
+        </div></div>
+        <div class="container mt-5">
+    <form method="POST">
+    {% csrf_token %}
+
+    <!-- Раздел с полем Email -->
+    <div class="form-section">
+        <label for="email">Укажите электронный адрес, по которому мы могли бы связаться для уточнения проблемы:</label>
+        <br><br>
+        {{ form.user_email|add_class:"form-control full-width" }}
+    </div>
+
+    <!-- Раздел с радио-кнопками -->
+<!--    <div class="form-section">-->
+<!--        <label>Как можно описать возникшую проблему:</label>-->
+<!--        <div class="radio">-->
+<!--            {{ form.problem_description|add_class:"form-control" }}-->
+<!--        </div>-->
+<!--    </div>-->
+<div class="form-section">
+    <label>Как можно описать возникшую проблему:</label>
+    <div class="radio">
+        {{ form.problem_description }}
+    </div>
+</div>
+
+    <!-- Текстовое поле для описания -->
+    <div class="form-section">
+        <label for="description">Ваше описание проблемы, дополнительная информация:</label>
+        <br><br>
+        {{ form.detailed_description|add_class:"form-control full-text-area" }}
+    </div>
+
+    <!-- Чекбоксы -->
+    <div class="form-section">
+        <label>Укажите утверждения, подходящие к описываемой проблеме:</label>
+        {{ form.multiple_choice }}
+    </div>
+
+    <!-- Кнопка отправки -->
+    <button type="submit" class="btn btn-primary-left">Отправить</button>
+</form>
+
+</div>
+
+<!--        {% if user.is_authenticated %}-->
+
+<!--        <img src="{% static 'rutubesupportmain/img/person_icon.png' %}" class="zoom-image" style="display: block; margin: 0 auto; mix-blend-mode: multiply;">-->
+
+<!--        {% endif %}-->
+
+         <!-- Обернем контент в обертку, чтобы создать пространство для видео -->
+        <div class="content-wrapper">
+            <!-- Основной контент страницы -->
+        </div>
+
+    </div>
+
+
+
+    </div>
+
+{% endblock %}

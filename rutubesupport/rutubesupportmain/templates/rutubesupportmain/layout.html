@@ -1,0 +1,166 @@
+<!--Нужно указать, что ты работаешь со статическими файлами:-->
+{% load static %}
+{% block styles %}
+<style>
+    body, html {
+    background: linear-gradient(to bottom, #161732 70%, #402357 100%);
+    margin: 0;
+    padding: 0;
+    background: #14191F;
+}
+
+
+.text-left {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 20px; /* Отступ слева для текста */
+    font-family: Arial; /* Устанавливает шрифт Arial */
+    color: #db3327;
+}
+
+.text-center {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-family: Arial; /* Устанавливает шрифт Arial */
+    color: #db3327;
+    margin-right: 25%;
+    margin-left: 25%;
+}
+
+.buttons-right {
+    display: flex;
+    flex-direction: column; /* Кнопки друг под другом */
+    align-items: flex-end; /* Выровнять кнопки по правому краю */
+    font-family: Open Sans, sans-serif;
+    font-size: 12px;
+    margin-top: 1.5%;
+    margin-right: 2%;
+}
+
+.btn-submit {
+    color: #fff;
+    background-color: #00a1e7;
+    font-family: Open Sans, sans-serif;
+    text-decoration: none;
+}
+
+.btn-primary {
+    border-radius: 100px;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Промежуток между кнопками */
+    width: fit-content; /* Ширина кнопки соответствует её содержимому */
+    color: #fff;
+    font-family: Open Sans, sans-serif;
+    font-size: 12px;
+    background-color: #00a1e7;
+    text-decoration: none;
+}
+
+.btn-primary-left {
+    border-radius: 100px;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Промежуток между кнопками */
+    width: fit-content; /* Ширина кнопки соответствует её содержимому */
+    color: #fff;
+    font-family: Open Sans, sans-serif;
+    font-size: 12px;
+    background-color: #00a1e7;
+    margin-left: 4%;
+    text-decoration: none;
+}
+
+aside {
+    float: left;
+    width: 20%;
+    height: 100%;
+    background-color: #1c232b;
+    font-family: Open Sans, sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
+}
+
+aside img {
+    width: 120px;
+}
+
+aside p {
+    margin-top: 50px;
+    font-size: 14px;
+}
+
+
+aside ul {list-style: none}
+aside ul li {
+    color: #e1e5ea;
+    display: block;
+    margin-top: 12px;
+    transition: transform .3s ease;
+    margin-left: -24px;
+}
+
+aside ul li:hover, aside ul a:hover {
+    text-decoration: none;
+    transform: scale(1.02)
+}
+
+.form-section {
+    margin-bottom: 40px;
+    margin-left: 24%;
+    margin-top: 19px;
+    color: #889BAF;
+    font-family: Open Sans, sans-serif;
+    font-size: 12px;
+}
+
+.full-width {
+    width: 95%; /* Поле ввода будет растягиваться на всю ширину контейнера */
+    box-sizing: border-box; /* Это важно, чтобы padding и borders учитывались в ширине */
+    padding: 10px; /* Добавьте padding для внутреннего отступа */
+    font-size: 12px;
+    background-color: #1c232b;
+    color: #e1e5ea;
+    border-radius: 10px; /* Скругленные углы */
+    resize: none;
+    outline: none; /* Убрать стандартное обрамление при фокусе */
+    border-color: #e1e5ea;
+}
+
+.full-text-area    {
+    width: 95%; /* Поле ввода будет растягиваться на всю ширину контейнера */
+    height: 18%;
+    box-sizing: border-box; /* Это важно, чтобы padding и borders учитывались в ширине */
+    padding: 10px; /* Добавьте padding для внутреннего отступа */
+    font-size: 12px;
+    background-color: #1c232b;
+    color: #e1e5ea;
+    border-radius: 10px; /* Скругленные углы */
+    resize: none;
+    outline: none; /* Убрать стандартное обрамление при фокусе */
+    border-color: #e1e5ea;
+}
+
+    .card-body {
+    width: 65%;
+    background-color: #1c232b;
+    border-color: #e1e5ea;
+    margin-left: 30%;
+    width: 50%;
+    height: 20%;
+    border-color: #e1e5ea;
+    color: #e1e5ea;
+    font-family: Open Sans, sans-serif;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+</html>

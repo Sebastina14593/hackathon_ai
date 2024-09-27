@@ -1,0 +1,51 @@
+{% extends 'rutubesupportmain/layout.html' %}
+
+{% block content %}
+<aside>
+        <ul>
+            <a style="text-decoration: none" href =""><li>Главная</li></a>
+            <a style="text-decoration: none" href =""><li>Обращения</li></a>
+            <a style="text-decoration: none" href =""><li>База знаний</li></a>
+            <a style="text-decoration: none" href =""><li>Настройки</li></a>
+        </ul>
+        </aside>
+
+    <div class="features">
+                <style>
+          .container {
+            display: flex; /* Используем flexbox */
+            justify-content: space-between; /* Распределяем пространство между элементами */
+            align-items: center; /* Выравниваем элементы по вертикали */
+            white-space: nowrap; /* Элементы не переносятся на новую строку */
+          }
+        </style>
+
+        <h2>Панель обращений</h2>
+        {% if requests %}
+    <div class="row">
+        {% for el in requests %}
+        {% if el.chat_status != 3 %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Обращение #{{ el.id }}</h5>
+                        <p class="card-text">
+                            <strong>Email:</strong> {{ el.user_email }} <br>
+                            <strong>Описание проблемы:</strong> {{ el.problem_description }} <br>
+                            <strong>Дата создания:</strong> {{ el.created_at|date:"d-m-Y H:i" }}
+                        </p>
+                        <a href="{% url 'messanger' el.id %}" class="btn btn-primary">Подробнее...</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Обращений пока нет.</p>
+{% endif %}
+
+        {# Комментарий #}
+    </div>
+
+{% endblock %}
